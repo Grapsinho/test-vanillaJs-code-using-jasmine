@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-5.2.0/jasmine_favicon.png">
+    <link rel="stylesheet" href="lib/jasmine-5.2.0/jasmine.css">
+  
+    <script src="lib/jasmine-5.2.0/jasmine.js"></script>
+    <script src="lib/jasmine-5.2.0/jasmine-html.js"></script>
+    <script src="lib/jasmine-5.2.0/boot0.js"></script>
+    <!-- optional: include a file here that configures the Jasmine env -->
+    <script src="lib/jasmine-5.2.0/boot1.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .note {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .note-title {
+            font-weight: bold;
+        }
+        .note-content {
+            margin: 5px 0;
+        }
+        .note-tags {
+            font-style: italic;
+            color: #666;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Advanced Note-Taking Application</h1>
+
+    <div>
+        <input type="text" id="noteTitleInput" placeholder="Title">
+        <textarea id="noteContentInput" placeholder="Content"></textarea>
+        <input type="text" id="noteTagsInput" placeholder="Tags (comma separated)">
+        <button id="addNoteButton">Add Note</button>
+    </div>
+
+    <div>
+        <input type="text" id="searchInput" placeholder="Search by title">
+        <button id="searchButton">Search</button>
+    </div>
+
+    <div>
+        <button id="sortTitleButton">Sort by Title</button>
+        <button id="sortDateButton">Sort by Date</button>
+    </div>
+
+    <div id="filterTags">
+        <!-- Tags filter buttons will be dynamically added here -->
+    </div>
+
+    <ul id="noteList"></ul>
+
+
+    
+    <!-- Your application script -->
+    <script src="../main.js" type="module"></script>
+    <!-- Your test script -->
+    <script src="../test.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+Test LocalStorage
+    
+    ჩვეულებრივი ჯავასკრიპტ კოდი
+
+    function saveToLocalStorage(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function getFromLocalStorage(key) {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : null;
+    }
+
+    function removeFromLocalStorage(key) {
+        localStorage.removeItem(key);
+    }
+
+    გავტესტოთ ეს კოდი
+
+    // spec/localStorageOperationsSpec.js
+    describe('LocalStorage Operations', function() {
+
+        სანამ რამის გატესტვას დავიწყებთ მანამ ვქმნით ფეიკ ლოკალ სთორეიჯებს
+        beforeEach(function() {
+            // Mock LocalStorage
+            let store = {};
+            შევქმენით ფეიკ ლოკალსთორეიჯიშ, ეს საშუალებას გვაძლევს შევინახოთ ფეიკ დატა ფეიკ ლოკალსთორეიჯში
+            spyOn(localStorage, 'setItem').and.callFake(function(key, value) {
+                store[key] = value;
+            });
+            ამის დახმარებით შეგვიძლია გავაკეთოთ მოთხოვნები ფეიკ ლოკალსთორეიჯში
+            spyOn(localStorage, 'getItem').and.callFake(function(key) {
+                return store[key] || null;
+            });
+            აქაც მსგავსი რა
+            spyOn(localStorage, 'removeItem').and.callFake(function(key) {
+                delete store[key];
+            });
+            spyOn(localStorage, 'clear').and.callFake(function() {
+                store = {};
+            });
+        });
+
+        it('should save an item to LocalStorage', function() {
+            const key = 'user';
+            const value = { name: 'John Doe', age: 30 };
+
+            saveToLocalStorage(key, value);
+
+            expect(localStorage.setItem).toHaveBeenCalledWith(key, JSON.stringify(value));
+        });
+
+        it('should get an item from LocalStorage', function() {
+            const key = 'user';
+            const value = { name: 'John Doe', age: 30 };
+
+            localStorage.setItem(key, JSON.stringify(value));
+            const retrievedValue = getFromLocalStorage(key);
+
+            expect(localStorage.getItem).toHaveBeenCalledWith(key);
+            expect(retrievedValue).toEqual(value);
+        });
+
+        it('should return null for a non-existent key in LocalStorage', function() {
+            const key = 'nonExistentKey';
+
+            const retrievedValue = getFromLocalStorage(key);
+
+            expect(localStorage.getItem).toHaveBeenCalledWith(key);
+            expect(retrievedValue).toBeNull();
+        });
+
+        it('should remove an item from LocalStorage', function() {
+            const key = 'user';
+
+            removeFromLocalStorage(key);
+
+            expect(localStorage.removeItem).toHaveBeenCalledWith(key);
+        });
+    });
+
